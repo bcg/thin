@@ -51,7 +51,6 @@ extensions:
 extra_rdoc_files: []
 
 files: 
-- COPYING
 - CHANGELOG
 - README
 - Rakefile
