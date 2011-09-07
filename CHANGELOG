@@ -1,4 +1,39 @@
-== 1.2.8 Does It Offend You, Yeah?
+== 1.3.0 Double Espresso
+ * BREAKING CHANGE: Remove automatic Content-Length setting.
+   It is now the responsibility of the app (or a middleware) to set the Content-Length.
+ * Log errors to STDERR [textgoeshere]
+ * Shut down gracefully when receiving SIGTERM [ddollar]
+     
+     Processes are allowed a chance to shut down gracefully when receiving
+     SIGTERM (http://en.wikipedia.org/wiki/SIGTERM).
+     
+     On Heroku, when shutting down a process, we send a SIGTERM followed 10
+     seconds later with a SIGKILL, similar to the behavior of the init daemon
+     on most Unix systems. This patch will allow Heroku apps to shut down
+     gracefully when they need to be terminated / moved.
+
+== 1.2.11 Bat-Shit Crazy
+ * Fix pure Ruby gem to not include binary.
+
+== 1.2.10 I'm dumb (BAD RELEASE, DON'T USE)
+ * I really am (bad release fix)
+
+== 1.2.9 Black Keys Extra Plus Wow (BAD RELEASE, DON'T USE)
+ * Improve fat binary loading.
+
+== 1.2.8 Black Keys
+ * Allow the connection to remain open for 1xx statuses [timshadel]
+
+     Both the 100 and 101 status codes require that the connection to the
+     server remain open. The 100 status code is used to tell the client that
+     the server is still receiving its request, and will continue to read
+     request input on the connection. The 101 status code is used to upgrade
+     the existing connection to another protocol, and specifically is NOT
+     used to upgrade a separate connection. Therefore, the connection must
+     remain open after this response in order to facilitate that.
+   
+ * Accept IE7 badly encoded URL (eg.: %uEEEE)
+ * Fix gemspec to work w/ Bundler [smparkes]
  * Add SSL support [tmm1]
  * Catch Errno::EPERM in Process.running? [Tony Kemp]
    On some systems (e.g. OpenBSD) you receive an EPERM exception if
@@ -6,7 +41,16 @@
    are root). But it does mean that the process exists, so return true.
  * Fix Rails version check that select which Rack adapter to use. Was using CGI adapter in Rails 3.
  * Ignore SIGHUP when no restart block is given
+ * Add SSL options to thin command line tool [goldmann]
 
+      --ssl                    Enables SSL
+      --ssl-key-file PATH      Path to private key
+      --ssl-cert-file PATH     Path to certificate
+      --ssl-verify             Enables SSL certificate verification
+    
+  * Expose peer SSL certificate in env (rack.peer_cert) [fd]
+  * Adjusting unix socket permissions to be more open [mbj]
+  
 == 1.2.7 No Hup
  * Support multiple Ruby version (fat binaries under windows)
  * Do not trap unsupported HUP signal on Windows

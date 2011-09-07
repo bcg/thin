@@ -13,7 +13,6 @@ Thin::GemSpec = Gem::Specification.new do |s|
   s.email                 = 'macournoyer@gmail.com'
   s.homepage              = 'http://code.macournoyer.com/thin/'
   s.rubyforge_project     = 'thin'
-  s.has_rdoc              = true
   s.executables           = %w(thin)
 
   s.required_ruby_version = '>= 1.8.5'
@@ -24,12 +23,12 @@ Thin::GemSpec = Gem::Specification.new do |s|
     s.add_dependency      'daemons',      '>= 1.0.9'
   end
 
-  s.files                 = %w(COPYING CHANGELOG README Rakefile) +
-                            Dir.glob("{benchmark,bin,doc,example,lib,spec,tasks}/**/*") + 
+  s.files                 = %w(CHANGELOG README Rakefile) +
+                            Dir.glob("{benchmark,bin,doc,example,lib,spec,tasks}/**/*") - Dir.glob("lib/thin_parser.*") + 
                             Dir.glob("ext/**/*.{h,c,rb,rl}")
   
   if WIN
-    s.files              += ["lib/thin_parser.#{Config::CONFIG['DLEXT']}"]
+    s.files              += FileList["lib/*/thin_parser.*"].to_a
   else
     s.extensions          = FileList["ext/**/extconf.rb"].to_a
   end

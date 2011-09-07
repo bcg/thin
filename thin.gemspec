@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: thin
 version: !ruby/object:Gem::Version 
-  version: 1.2.7.b
+  version: 1.2.8.bcg
 platform: ruby
 authors: 
 - Marc-Andre Cournoyer

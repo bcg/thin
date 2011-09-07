@@ -39,14 +39,13 @@ require "#{Thin::ROOT}/thin/version"
 require "#{Thin::ROOT}/thin/statuses"
 require "#{Thin::ROOT}/rack/adapter/loader"
 
-# support multiple Ruby version (fat binaries under windows)
 begin
-  require "#{Thin::ROOT}/thin_parser"
+  # Select proper binary
+  major_ruby_version = RUBY_VERSION[/^(\d+\.\d+)/]
+  require "#{Thin::ROOT}/#{major_ruby_version}/thin_parser"
 rescue LoadError
-  if RUBY_PLATFORM =~ /mingw|mswin/ then
-    RUBY_VERSION =~ /(\d+.\d+)/
-    require "#{Thin::ROOT}/#{$1}/thin_parser"
-  end
+  # Installed from source
+  require "#{Thin::ROOT}/thin_parser"
 end
 
 module Rack

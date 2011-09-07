@@ -70,7 +70,15 @@ module Thin
                                        "Rack adapter")                                  { |file| @options[:rackup] = file }
         opts.on("-c", "--chdir DIR", "Change to dir before starting")                   { |dir| @options[:chdir] = File.expand_path(dir) }
         opts.on(      "--stats PATH", "Mount the Stats adapter under PATH")             { |path| @options[:stats] = path }
-        
+
+        opts.separator ""
+        opts.separator "SSL options:"
+
+        opts.on(      "--ssl", "Enables SSL")                                           { @options[:ssl] = true }
+        opts.on(      "--ssl-key-file PATH", "Path to private key")                     { |path| @options[:ssl_key_file] = path }
+        opts.on(      "--ssl-cert-file PATH", "Path to certificate")                    { |path| @options[:ssl_cert_file] = path }
+        opts.on(      "--ssl-verify", "Enables SSL certificate verification")           { @options[:ssl_verify] = true }
+
         opts.separator ""
         opts.separator "Adapter options:"
         opts.on("-e", "--environment ENV", "Framework environment " +                       
@@ -110,7 +118,7 @@ module Thin
         opts.on("-f", "--force", "Force the execution of the command")                  { @options[:force] = true }
         opts.on(      "--max-conns NUM", "Maximum number of open file descriptors " +
                                          "(default: #{@options[:max_conns]})",
-                                         "Might require sudo to set higher then 1024")  { |num| @options[:max_conns] = num.to_i } unless Thin.win?
+                                         "Might require sudo to set higher than 1024")  { |num| @options[:max_conns] = num.to_i } unless Thin.win?
         opts.on(      "--max-persistent-conns NUM",
                                        "Maximum number of persistent connections",
                                        "(default: #{@options[:max_persistent_conns]})") { |num| @options[:max_persistent_conns] = num.to_i }
